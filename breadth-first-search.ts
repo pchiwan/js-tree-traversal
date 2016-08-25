@@ -9,35 +9,40 @@ import utils from './utils';
  * Traverse the binary tree all the while 
  * printing each node's value
  */ 
-export function traverse(root: IBTNode, verbose: boolean = false): void {
+export function traverse(root: IBTNode, verbose: boolean = false): Array<any> {
   utils.narrate(verbose, '--- breadth-first search ---');
+  let output = [];
   
   const h = height(root);
   utils.narrate(verbose, `tree height is: ${h}`);
   
   for (let i = 1; i <= h; i++) {
-    printLevel(root, i, verbose);
+    output = visitNode(root, i, output, verbose);
   }
+  return output;
 }
  
 /**
- * Print nodes at a given level
+ * Inspects current node and keeps travesing left-to-right top-to-bottom
  */
-function printLevel(root: IBTNode, level: number, verbose: boolean = false): void {
+function visitNode(root: IBTNode, level: number, output: Array<any>, verbose: boolean = false): Array<any> {
   if (!root) {
-    return;
+    return output;
   }
 
   if (level === 1) {
-    console.log(root.value);
+    utils.narrate(verbose, root.value);
+    output.push(root.value);
   }
   else if (level > 1)
   {
     utils.narrate(verbose, `level: ${level} | going down left`);
-    printLevel(root.left, level - 1, verbose);
+    output = visitNode(root.left, level - 1, output, verbose);
     utils.narrate(verbose, `level: ${level} | going down right`);
-    printLevel(root.right, level - 1, verbose);
+    output = visitNode(root.right, level - 1, output, verbose);
   }
+  
+  return output;
 }
 
 /**

@@ -8,22 +8,29 @@ import utils from './utils';
  * Traverse the binary tree all the while 
  * printing each node's value
  */ 
-export function traverse(root: IBTNode, verbose: boolean = false): void {
+export function traverse(root: IBTNode, verbose: boolean = false): Array<any> {
   utils.narrate(verbose, '--- depth-first search ---');
 
-  printLevel(root, 1, verbose);
+  return visitNode(root, 1, [], verbose);
 }
 
-function printLevel(root: IBTNode, level: number, verbose: boolean = false): void {
+/**
+ * Inspects current node and keeps travesing down
+ */
+function visitNode(root: IBTNode, level: number, output: Array<any>, verbose: boolean = false): Array<any> {
   if (!root) {
-    return;
+    return output;
   }
 
-  console.log(root.value);
+  utils.narrate(verbose, root.value);
+  output.push(root.value);
+
   utils.narrate(verbose, `level ${level} | going down left`);  
-  printLevel(root.left, level + 1, verbose);
+  output = visitNode(root.left, level + 1, output, verbose);
   utils.narrate(verbose, `level ${level} | going down right`);
-  printLevel(root.right, level + 1, verbose);
+  output = visitNode(root.right, level + 1, output, verbose);
+
+  return output; 
 }
 
 export default {

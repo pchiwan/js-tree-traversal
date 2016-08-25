@@ -8,7 +8,11 @@ node.right= new BTNode(3);
 node.left.left= new BTNode(4);
 node.left.right= new BTNode(5);
 node.right.left= new BTNode(6);
-node.right.right= new BTNode(7); 
+node.right.right= new BTNode(7);
+node.left.left.left = new BTNode(8);
+node.left.left.right = new BTNode(9); 
 
-bfs.traverse(node, false);
-dfs.traverse(node, false);
+console.log('--- breadth-first search ---');
+console.log(bfs.traverse(node, false).join(' '));
+console.log('--- depth-first search ---');
+console.log(dfs.traverse(node, false).join(' '));
